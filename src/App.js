@@ -5,48 +5,54 @@ import Time from './componentes/Time';
 
 function App() {
 
-  const times = [
+  const [times, setTimes] = useState([
     {
       nome: 'Programação',
-      corPrimaria: '#57c278',
-      corSecundaria: '#d9f7e9'
+      cor: '#57c278',
     },
     {
       nome: 'Front-End',
-      corPrimaria: '#82cffa',
-      corSecundaria: '#e8f8ff'
+      cor: '#82cffa',
     },
     {
       nome: 'Data Science',
-      corPrimaria: '#a6d157',
-      corSecundaria: '#F0F8E2'
+      cor: '#a6d157',
     },
     {
       nome: 'Devops',
-      corPrimaria: '#e06b69',
-      corSecundaria: '#fde7e8'
+      cor: '#e06b69',
     },
     {
       nome: 'UX e Design',
-      corPrimaria: '#d86ebf',
-      corSecundaria: '#fae9f5'
+      cor: '#d86ebf',
     },
     {
       nome: 'Mobile',
-      corPrimaria: '#ffba05',
-      corSecundaria: '#fff5d9'
+      cor: '#ffba05',
     },
     {
       nome: 'Inovação e Gestão',
-      corPrimaria: '#ff8a29',
-      corSecundaria: '#ffeedf'
-    },
-  ]
+      cor: '#ff8a29',
+    }
+  ])
 
   const [colaboradores, setColaboradores] = useState([])
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
     setColaboradores([...colaboradores, colaborador])
+  }
+
+  const deletarColaborador = (nome) =>{
+    setColaboradores(colaboradores.map(colaborador => colaborador.nome !== nome));
+  }
+
+  const mudaCorDoTime = (cor, nomeTime) =>{
+    setTimes(times.map(time =>{
+      if(time.nome == nomeTime){
+        time.cor = cor
+      }
+      return time;
+    }))
   }
 
   return (
@@ -57,9 +63,10 @@ function App() {
       {times.map(time => <Time
         key={time.nome}
         nome={time.nome}
-        corPrimaria={time.corPrimaria}
-        corSecundaria={time.corSecundaria}
+        cor={time.cor}
         colaboradores={colaboradores.filter(colaborador => colaborador.time === time.nome)}
+        aoDeletar={deletarColaborador}
+        mudarCor={mudaCorDoTime}
         />)}
         
     </div>
